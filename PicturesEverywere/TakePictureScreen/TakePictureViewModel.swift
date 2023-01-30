@@ -11,7 +11,7 @@ import SwiftUI
 
 final class TakePictureViewModel: ObservableObject {
     
-    let principalViewModel = PictureViewModel()
+    private let dataStorage = ImageStorage()
     @Published var showingImagePicker:Bool = false 
     @Published public var flashMode: AVCaptureDevice.FlashMode = .off
     @Published public var shouldShowAlertView = false
@@ -119,7 +119,7 @@ final class TakePictureViewModel: ObservableObject {
                     if let data = photoCaptureProcessor.photoData {
                         self.model = TakePictureModel(originalData: data)
                         self.instantPhoto = DetailPhotoModel(image: self.model.image!, location: withLocation)
-                        self.principalViewModel.imagesArray.append(self.instantPhoto)
+                        self.dataStorage.imagesArray.append(self.instantPhoto)
                   
                         print("passing photo")
                     } else {

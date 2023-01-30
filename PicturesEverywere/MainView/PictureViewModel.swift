@@ -21,8 +21,7 @@ final class PictureViewModel: NSObject ,ObservableObject, CLLocationManagerDeleg
     public var errorDescription = ""
     @Published var showingImagePicker = false
     let geocoder = CLGeocoder()
-    @Published var imagesArray = Array<DetailPhotoModel>()
-    
+  
     func toggleAlert(){
         showingAlert.toggle()
     }

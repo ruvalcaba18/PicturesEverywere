@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct PicturesMainView: View {
-    
+    @State var dataStorage = ImageStorage()
     @ObservedObject var viewModel = PictureViewModel()
     private var gridItemLayout = [GridItem(.adaptive(minimum: 150))]
     let buttonWidth: CGFloat = 0.87
@@ -25,13 +25,15 @@ struct PicturesMainView: View {
                             .frame(width: 100, height: 100)
                             .accessibility(label: Text("Placeholder Image"))
                     }.alert("You haven't taken any photos yet", isPresented: $viewModel.showingAlert) {
-                        Button("OK", role: .cancel) { }
+                        Button("OK", role: .cancel) {
+                            print(dataStorage.imagesArray.count)
+                        }
                     }.padding([.leading,.trailing],20)
                     
                 }
             }
         }
-        .background(.black)
+        .background(.white)
     }
     
     
@@ -65,19 +67,19 @@ struct PicturesMainView: View {
                     .cornerRadius(25)
                 }
                 .navigationTitle("Pictures everywhere!")
-                .background(.black)
+                .background(.white)
                 .alert(isPresented: $viewModel.shouldShowAlertView, content: {
                     Alert(title: Text("Camera Access"), message: Text(viewModel.errorDescription), dismissButton: .default(Text("Go to settings"), action: {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!,
                                                   options: [:], completionHandler: nil)
+           
                     }))
                     
                 })
             }
             .navigationViewStyle(.stack)
-            .foregroundColor(.black)
             .padding(20)
-            .background(.black)
+            .background(.white)
             .onAppear {
                 self.viewModel.requestLocation()
                 self.viewModel.checkCameraPermission()
